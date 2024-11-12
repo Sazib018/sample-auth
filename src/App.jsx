@@ -13,7 +13,7 @@ function App() {
   const auth = getAuth(app)
   const googleProvider = new GoogleAuthProvider();
   const gitHubProvider = new GithubAuthProvider();
-  const provider = new FacebookAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
 
 
 
@@ -57,14 +57,13 @@ function App() {
 
   /*  Facebook log in  */
   const handelFacebookLogIn =() =>{
-    signInWithPopup(auth , provider)
+    signInWithPopup(auth , facebookProvider)
     .then(result =>{
       const user = result.user;
       console.log(user);
-      setStateUser(user)
-      
+      setStateUser(user);
     })
-    .catch(err => console.log(err)
+    .catch(error => console.log(error)
     )
   }
 
