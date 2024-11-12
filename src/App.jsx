@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import { getAuth, GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { FacebookAuthProvider, getAuth, GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import app from './components/Firebase/firebase.utils'
+
 
 
 
@@ -12,41 +13,56 @@ function App() {
   const auth = getAuth(app)
   const googleProvider = new GoogleAuthProvider();
   const gitHubProvider = new GithubAuthProvider();
+  const provider = new FacebookAuthProvider();
 
 
-/*   google sign in button */
+
+  /*   google sign in button */
   const handelGoogleButton = () => {
     signInWithPopup(auth, googleProvider)
-    .then(result => {
-      const user = result.user;
-      console.log(user);
-      setStateUser(user)
-    })
-    .catch(err => console.log(err)
-    )
-}
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        setStateUser(user)
+      })
+      .catch(err => console.log(err)
+      )
+  }
 
 
-/*   google sign in button */
-  const handelGoogleSignOut =() =>{
+  /*   google sign out button */
+  const handelGoogleSignOut = () => {
     signOut(auth)
-    .then(res => {
-      console.log(res);
-      setStateUser(null)
-    })
-    .catch(err => console.log(err)
-    )
+      .then(res => {
+        console.log(res);
+        setStateUser(null)
+      })
+      .catch(err => console.log(err)
+      )
   }
 
 
 
   /*   git hub  log in button */
-  const handelGitHubLogIn =() =>{
+  const handelGitHubLogIn = () => {
     signInWithPopup(auth, gitHubProvider)
-    .then(result => {
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        setStateUser(user)
+      })
+      .catch(err => console.log(err)
+      )
+  }
+
+  /*  Facebook log in  */
+  const handelFacebookLogIn =() =>{
+    signInWithPopup(auth , provider)
+    .then(result =>{
       const user = result.user;
       console.log(user);
       setStateUser(user)
+      
     })
     .catch(err => console.log(err)
     )
@@ -63,7 +79,7 @@ function App() {
 
       <button onClick={handelGitHubLogIn}>GitHub LogIn</button>
 
-      <button>Log In</button>
+      <button onClick={handelFacebookLogIn}>Log In</button>
 
       {
         stateUser &&
